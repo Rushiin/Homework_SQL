@@ -166,7 +166,7 @@ select distinct CNO from GRADE
 select SNAME,DORMNO from STUDENT where sage>=21 and sage<=23
 /*6-10*/
 select SNAME from STUDENT where DNO in(2,3,4)
-select *from STUDENT where ltrim(sname like N'张%'
+select *from STUDENT where ltrim(sname) like N'张%'
 select *from STUDENT where ltrim(sname) like N'_明%'
 select CNAME,TEACHER from COURSE where cpno is null
 select *from STUDENT where DNO=1 and ssex=N'男'
@@ -214,7 +214,7 @@ and exists(select 1 from GRADE where SNO=G.SNO and CNO in('01','02') and CNO<>G.
 */
 --select distinct SNO from GRADE G where CNO='01' or CNO='02'group by SNO having count(CNO)>=2
 select SNAME,STUDENT.SNO from STUDENT,GRADE where STUDENT.SNO=GRADE.SNO 
-and CNO in('01','02') group by STUDENT.SNO,SNAME having count(CNO)>=2
+and CNO in('01','02') group by STUDENT.SNO,SNAME having count(CNO)=2
 
 select SNAME,STUDENT.SNO from STUDENT,GRADE
 where STUDENT.SNO=GRADE.SNO and CNO in(select CNO from GRADE where SNO='990102') and STUDENT.SNO<>'990102'group by STUDENT.SNO,SNAME 
@@ -226,4 +226,4 @@ select SNAME from COURSE,STUDENT,GRADE
 where STUDENT.SNO=GRADE.SNO and COURSE.CNO=GRADE.CNO 
 and CNAME in(N'数据库原理',N'高等数学')
 group by GRADE.SNO,SNAME
-having count(CNAME)>=2
+having count(CNAME)=2
